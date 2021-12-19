@@ -21,7 +21,17 @@ std::vector<int> splitAndConvertToNumbers(std::string const& input)
     return output;
 }
 
-int findFirstIllegalNumberInVector(std::vector<int> const& vector1, int preamble_size) { return 4; }
+int findFirstIllegalNumberInVector(std::vector<int> const& vector, int preamble_size)
+{
+    std::size_t currentIndexToCheck = preamble_size;
+    int currentNumberToCheck = vector.at(currentIndexToCheck);
+
+    if (vector.at(0) + vector.at(1) != currentNumberToCheck) {
+        return currentNumberToCheck;
+    }
+
+    return 4;
+}
 
 int findFirstIllegalNumberInString(std::string const& input, int preamble_size)
 {
@@ -45,17 +55,21 @@ TEST(SplitAndConvertToNumbersTest, InputWithTwoNumberReturnsCorrectValues)
     EXPECT_EQ(numbers.at(1), 34);
 }
 
-TEST(FindFirstIllegalNumberInVectorTest, Preamble2Easy)
+class FindFirstIllegalNumberInVectorTestFixture
+    : public ::testing::TestWithParam<std::pair<std::vector<int>, int>> {
+};
+
+TEST_P(FindFirstIllegalNumberInVectorTestFixture, Preamble2)
 {
-    std::vector<int> const numbers { 1, 2, 4 };
-    ASSERT_EQ(findFirstIllegalNumberInVector(numbers, 2), 4);
+    auto const numbers = GetParam().first;
+    ASSERT_EQ(findFirstIllegalNumberInVector(numbers, 2), GetParam().second);
 }
 
-TEST(FindFirstIllegalNumberInVectorTest, Preamble2Easy2)
-{
-    std::vector<int> const numbers { 1, 2, 5 };
-    ASSERT_EQ(findFirstIllegalNumberInVector(numbers, 2), 5);
-}
+INSTANTIATE_TEST_SUITE_P(FindFirstIllegalNumberInVectorTest,
+    FindFirstIllegalNumberInVectorTestFixture,
+    ::testing::Values(std::make_pair(std::vector<int> { 1, 2, 4 }, 4),
+        std::make_pair(std::vector<int> { 1, 2, 5 }, 5),
+        std::make_pair(std::vector<int> { 1, 2, 3, 6 }, 6)));
 
 TEST(ImplementationTest, ExampleTest)
 {
