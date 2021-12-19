@@ -1,7 +1,9 @@
 #include "implementation.hpp"
 #include "strutils.hpp"
+#include <iostream>
+#include <sstream>
 
-std::vector<int> splitAndConvertToNumbers(std::string const& input)
+std::vector<std::uint64_t> splitAndConvertToNumbers(std::string const& input)
 {
     if (input.empty()) {
         return {};
@@ -9,28 +11,33 @@ std::vector<int> splitAndConvertToNumbers(std::string const& input)
 
     std::vector<std::string> lines = strutil::split(input, "\n");
 
-    std::vector<int> output;
+    std::vector<std::uint64_t> output;
     output.resize(lines.size());
-    std::transform(
-        lines.begin(), lines.end(), output.begin(), [](auto const& str) { return std::stoi(str); });
+    std::transform(lines.begin(), lines.end(), output.begin(), [](auto const& str) {
+        std::stringstream ss { str };
+        std::uint64_t number;
+        ss >> number;
+        return number;
+    });
 
     return output;
 }
 
-std::vector<int> getPreamble(
-    const std::vector<int>& vector, int preamble_size, std::size_t currentIndexToCheck)
+std::vector<std::uint64_t> getPreamble(
+    const std::vector<std::uint64_t>& vector, int preamble_size, std::size_t currentIndexToCheck)
 {
     if (preamble_size > currentIndexToCheck) {
         throw std::invalid_argument { "Out of bounds" };
     }
 
-    std::vector<int> preamble(
+    std::vector<std::uint64_t> preamble(
         vector.begin() + currentIndexToCheck - preamble_size, vector.begin() + currentIndexToCheck);
 
     return preamble;
 }
 
-bool numberCanBeConstructedFromPreamble(std::vector<int> const& preamble, int currentNumberToCheck)
+bool numberCanBeConstructedFromPreamble(
+    std::vector<std::uint64_t> const& preamble, std::uint64_t currentNumberToCheck)
 {
     for (auto indexA = 0U; indexA != preamble.size() - 1; ++indexA) {
         for (auto indexB = indexA + 1; indexB != preamble.size(); ++indexB) {
@@ -45,7 +52,8 @@ bool numberCanBeConstructedFromPreamble(std::vector<int> const& preamble, int cu
     return false;
 }
 
-int findFirstIllegalNumberInVector(std::vector<int> const& vector, int preamble_size)
+std::uint64_t findFirstIllegalNumberInVector(
+    std::vector<std::uint64_t> const& vector, int preamble_size)
 {
     for (std::size_t currentIndexToCheck = preamble_size; currentIndexToCheck != vector.size();
          ++currentIndexToCheck) {
@@ -61,9 +69,9 @@ int findFirstIllegalNumberInVector(std::vector<int> const& vector, int preamble_
     return 0;
 }
 
-int findFirstIllegalNumberInString(std::string const& input, int preamble_size)
+std::uint64_t findFirstIllegalNumberInString(std::string const& input, int preamble_size)
 {
-    std::vector<int> const numbers = splitAndConvertToNumbers(input);
+    std::vector<std::uint64_t> const numbers = splitAndConvertToNumbers(input);
 
     return findFirstIllegalNumberInVector(numbers, preamble_size);
 }

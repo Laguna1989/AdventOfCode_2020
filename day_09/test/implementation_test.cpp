@@ -4,7 +4,7 @@
 using namespace ::testing;
 
 class NumberCanBeConstructedFromPreambleTestFixture
-    : public ::testing::TestWithParam<std::pair<std::vector<int>, int>> {
+    : public ::testing::TestWithParam<std::pair<std::vector<std::uint64_t>, std::uint64_t>> {
 };
 using NumberCanBeConstructedFromPreambleTrueTestFixture
     = NumberCanBeConstructedFromPreambleTestFixture;
@@ -16,11 +16,11 @@ TEST_P(NumberCanBeConstructedFromPreambleTrueTestFixture, TrueResult1)
 
 INSTANTIATE_TEST_SUITE_P(NumberCanBeConstructedFromPreambleTrueTest,
     NumberCanBeConstructedFromPreambleTrueTestFixture,
-    ::testing::Values(std::make_pair(std::vector<int> { 1, 2 }, 3),
-        std::make_pair(std::vector<int> { 1, 3 }, 4),
-        std::make_pair(std::vector<int> { 1, 3, 5 }, 8),
-        std::make_pair(std::vector<int> { 1, 3, 5 }, 4),
-        std::make_pair(std::vector<int> { 1, 3, 5 }, 6)));
+    ::testing::Values(std::make_pair(std::vector<std::uint64_t> { 1, 2 }, 3),
+        std::make_pair(std::vector<std::uint64_t> { 1, 3 }, 4),
+        std::make_pair(std::vector<std::uint64_t> { 1, 3, 5 }, 8),
+        std::make_pair(std::vector<std::uint64_t> { 1, 3, 5 }, 4),
+        std::make_pair(std::vector<std::uint64_t> { 1, 3, 5 }, 6)));
 
 using NumberCanBeConstructedFromPreambleFalseTestFixture
     = NumberCanBeConstructedFromPreambleTestFixture;
@@ -32,43 +32,43 @@ TEST_P(NumberCanBeConstructedFromPreambleFalseTestFixture, TrueResult1)
 
 INSTANTIATE_TEST_SUITE_P(NumberCanBeConstructedFromPreambleTrueTest,
     NumberCanBeConstructedFromPreambleFalseTestFixture,
-    ::testing::Values(std::make_pair(std::vector<int> { 1, 2 }, 4),
-        std::make_pair(std::vector<int> { 1, 2 }, 1),
-        std::make_pair(std::vector<int> { 1, 2, 3 }, 1),
-        std::make_pair(std::vector<int> { 1, 2, 3 }, 6)));
+    ::testing::Values(std::make_pair(std::vector<std::uint64_t> { 1, 2 }, 4),
+        std::make_pair(std::vector<std::uint64_t> { 1, 2 }, 1),
+        std::make_pair(std::vector<std::uint64_t> { 1, 2, 3 }, 1),
+        std::make_pair(std::vector<std::uint64_t> { 1, 2, 3 }, 6)));
 
 TEST(GetPreambleTest, GetPreambleReturnsCorrectValues)
 {
-    std::vector<int> numbers { 1, 2, 3, 5 };
+    std::vector<std::uint64_t> numbers { 1, 2, 3, 5 };
     int preamble_size = 3;
     std::size_t indexToCheck = 3;
 
     auto result = getPreamble(numbers, preamble_size, indexToCheck);
-    std::vector<int> expectedResult = { 1, 2, 3 };
+    std::vector<std::uint64_t> expectedResult = { 1, 2, 3 };
 
     EXPECT_EQ(result, expectedResult);
 }
 
 TEST(GetPreambleTest, GetPreambleReturnsCorrectValues2)
 {
-    std::vector<int> numbers { 1, 2, 3, 5, 6, 7, 10 };
+    std::vector<std::uint64_t> numbers { 1, 2, 3, 5, 6, 7, 10 };
     int preamble_size = 3;
     std::size_t indexToCheck = 6;
 
     auto result = getPreamble(numbers, preamble_size, indexToCheck);
-    std::vector<int> expectedResult = { 5, 6, 7 };
+    std::vector<std::uint64_t> expectedResult = { 5, 6, 7 };
 
     EXPECT_EQ(result, expectedResult);
 }
 
 TEST(GetPreambleTest, GetPreambleReturnsCorrectValues3)
 {
-    std::vector<int> numbers { 1, 2, 3, 5, 6, 7, 10 };
+    std::vector<std::uint64_t> numbers { 1, 2, 3, 5, 6, 7, 10 };
     int preamble_size = 4;
     std::size_t indexToCheck = 6;
 
     auto result = getPreamble(numbers, preamble_size, indexToCheck);
-    std::vector<int> expectedResult = { 3, 5, 6, 7 };
+    std::vector<std::uint64_t> expectedResult = { 3, 5, 6, 7 };
 
     EXPECT_EQ(result, expectedResult);
 }
@@ -89,7 +89,7 @@ TEST(SplitAndConvertToNumbersTest, InputWithTwoNumberReturnsCorrectValues)
 }
 
 class FindFirstIllegalNumberInVectorTestFixture
-    : public ::testing::TestWithParam<std::pair<std::vector<int>, int>> {
+    : public ::testing::TestWithParam<std::pair<std::vector<std::uint64_t>, std::uint64_t>> {
 };
 
 using FindFirstIllegalNumberInVectorPreamble2TestFixture
@@ -103,9 +103,9 @@ TEST_P(FindFirstIllegalNumberInVectorPreamble2TestFixture, Preamble2)
 
 INSTANTIATE_TEST_SUITE_P(FindFirstIllegalNumberInVectorPreamble2Test,
     FindFirstIllegalNumberInVectorPreamble2TestFixture,
-    ::testing::Values(std::make_pair(std::vector<int> { 1, 2, 4 }, 4),
-        std::make_pair(std::vector<int> { 1, 2, 5 }, 5),
-        std::make_pair(std::vector<int> { 1, 2, 3, 6 }, 6)));
+    ::testing::Values(std::make_pair(std::vector<std::uint64_t> { 1, 2, 4 }, 4),
+        std::make_pair(std::vector<std::uint64_t> { 1, 2, 5 }, 5),
+        std::make_pair(std::vector<std::uint64_t> { 1, 2, 3, 6 }, 6)));
 
 using FindFirstIllegalNumberInVectorPreamble3TestFixture
     = FindFirstIllegalNumberInVectorTestFixture;
@@ -118,7 +118,7 @@ TEST_P(FindFirstIllegalNumberInVectorPreamble3TestFixture, Preamble3)
 
 INSTANTIATE_TEST_SUITE_P(FindFirstIllegalNumberInVectorPreamble3Test,
     FindFirstIllegalNumberInVectorPreamble3TestFixture,
-    ::testing::Values(std::make_pair(std::vector<int> { 1, 2, 3, 6 }, 6)));
+    ::testing::Values(std::make_pair(std::vector<std::uint64_t> { 1, 2, 3, 6 }, 6)));
 
 TEST(ImplementationTest, ExampleTest)
 {
