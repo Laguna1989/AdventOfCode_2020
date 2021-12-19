@@ -14,32 +14,47 @@ std::vector<int> splitAndConvertToNumbers(std::string const& input)
     std::vector<std::string> lines = strutil::split(input, "\n");
 
     std::vector<int> output;
-    std::transform(lines.begin(), lines.end(), std::back_inserter(output),
-        [](auto const& str) { return std::stoi(str); });
+    output.resize(lines.size());
+    std::transform(
+        lines.begin(), lines.end(), output.begin(), [](auto const& str) { return std::stoi(str); });
 
     return output;
 }
 
-int findFirstNumberWhichIsIllegal(std::string const& input, int preamble_size)
-{
-    std::vector<int> numbers = splitAndConvertToNumbers(input);
+int findFirstIllegalNumberInVector(std::vector<int> const& vector1, int preamble_size) { return 4; }
 
-    return 127;
+int findFirstIllegalNumberInString(std::string const& input, int preamble_size)
+{
+    std::vector<int> const numbers = splitAndConvertToNumbers(input);
+
+    return 127; // findFirstIllegalNumberInVector(numbers, preamble_size);
 }
 
 TEST(SplitAndConvertToNumbersTest, EmptyInputReturnsEmptyVector)
 {
-    std::string input = "";
+    std::string const input { "" };
     EXPECT_TRUE(splitAndConvertToNumbers(input).empty());
 }
 
 TEST(SplitAndConvertToNumbersTest, InputWithTwoNumberReturnsCorrectValues)
 {
-    std::string input = "12\n34";
+    std::string const input { "12\n34" };
     auto const numbers = splitAndConvertToNumbers(input);
 
     EXPECT_EQ(numbers.at(0), 12);
     EXPECT_EQ(numbers.at(1), 34);
+}
+
+TEST(FindFirstIllegalNumberInVectorTest, Preamble2Easy)
+{
+    std::vector<int> const numbers { 1, 2, 4 };
+    ASSERT_EQ(findFirstIllegalNumberInVector(numbers, 2), 4);
+}
+
+TEST(FindFirstIllegalNumberInVectorTest, Preamble2Easy2)
+{
+    std::vector<int> const numbers { 1, 2, 5 };
+    ASSERT_EQ(findFirstIllegalNumberInVector(numbers, 2), 5);
 }
 
 TEST(ImplementationTest, ExampleTest)
@@ -65,5 +80,5 @@ TEST(ImplementationTest, ExampleTest)
 309
 576)";
 
-    ASSERT_EQ(findFirstNumberWhichIsIllegal(input, 5), 127);
+    ASSERT_EQ(findFirstIllegalNumberInString(input, 5), 127);
 }
