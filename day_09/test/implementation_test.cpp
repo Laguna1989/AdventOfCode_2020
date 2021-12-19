@@ -34,15 +34,31 @@ std::vector<int> getPreamble(
     return preamble;
 }
 
+bool numberCanBeConstructedFromPreamble(std::vector<int> const& preamble, int currentNumberToCheck)
+{
+    for (auto indexA = 0U; indexA != preamble.size() - 1; ++indexA) {
+        for (auto indexB = indexA + 1; indexB != preamble.size(); ++indexB) {
+            auto const valA = preamble.at(indexA);
+            auto const valB = preamble.at(indexB);
+            if (valA + valB == currentNumberToCheck) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 int findFirstIllegalNumberInVector(std::vector<int> const& vector, int preamble_size)
 {
     std::size_t currentIndexToCheck = preamble_size;
     int currentNumberToCheck = vector.at(currentIndexToCheck);
 
-    std::size_t indexA = 0U;
-    std::size_t indexB = 1U;
+    auto const currentPreamble = getPreamble(vector, preamble_size, currentIndexToCheck);
 
-    if (vector.at(indexA) + vector.at(indexB) != currentNumberToCheck) {
+    // TODO use function
+
+    if (vector.at(0U) + vector.at(1U) != currentNumberToCheck) {
         return currentNumberToCheck;
     }
 
@@ -54,6 +70,31 @@ int findFirstIllegalNumberInString(std::string const& input, int preamble_size)
     std::vector<int> const numbers = splitAndConvertToNumbers(input);
 
     return 127; // findFirstIllegalNumberInVector(numbers, preamble_size);
+}
+
+class NumberCanBeConstructedFromPreambleTestFixture
+    : public ::testing::TestWithParam<std::pair<std::vector<int>, int>> {
+};
+
+TEST_P(NumberCanBeConstructedFromPreambleTestFixture, TrueResult1)
+{
+    ASSERT_TRUE(numberCanBeConstructedFromPreamble(GetParam().first, GetParam().second));
+}
+
+INSTANTIATE_TEST_SUITE_P(NumberCanBeConstructedFromPreambleTest,
+    NumberCanBeConstructedFromPreambleTestFixture,
+    ::testing::Values(std::make_pair(std::vector<int> { 1, 2 }, 3)));
+
+TEST(NumberCanBeConstructedFromPreambleTest, TrueResult1)
+{
+    std::vector<int> preamble { 1, 2 };
+    ASSERT_TRUE(numberCanBeConstructedFromPreamble(preamble, 3));
+}
+
+TEST(NumberCanBeConstructedFromPreambleTest, FalseResult1)
+{
+    std::vector<int> preamble { 1, 2 };
+    ASSERT_FALSE(numberCanBeConstructedFromPreamble(preamble, 4));
 }
 
 TEST(GetPreambleTest, GetPreambleReturnsCorrectValues)
@@ -76,6 +117,18 @@ TEST(GetPreambleTest, GetPreambleReturnsCorrectValues2)
 
     auto result = getPreamble(numbers, preamble_size, indexToCheck);
     std::vector<int> expectedResult = { 5, 6, 7 };
+
+    EXPECT_EQ(result, expectedResult);
+}
+
+TEST(GetPreambleTest, GetPreambleReturnsCorrectValues3)
+{
+    std::vector<int> numbers { 1, 2, 3, 5, 6, 7, 10 };
+    int preamble_size = 4;
+    std::size_t indexToCheck = 6;
+
+    auto result = getPreamble(numbers, preamble_size, indexToCheck);
+    std::vector<int> expectedResult = { 3, 5, 6, 7 };
 
     EXPECT_EQ(result, expectedResult);
 }
