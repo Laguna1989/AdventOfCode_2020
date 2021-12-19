@@ -45,4 +45,5 @@ endif ()
 
 
 add_subdirectory(day_03)
+add_subdirectory(day_05)
 add_subdirectory(day_09)
