@@ -24,7 +24,13 @@ std::vector<int> splitAndConvertToNumbers(std::string const& input)
 std::vector<int> getPreamble(
     std::vector<int> const& vector, int preamble_size, std::size_t currentIndexToCheck)
 {
-    std::vector<int> preamble;
+    if (preamble_size > currentIndexToCheck) {
+        throw std::invalid_argument { "Out of bounds" };
+    }
+
+    std::vector<int> preamble(
+        vector.begin() + currentIndexToCheck - preamble_size, vector.begin() + currentIndexToCheck);
+
     return preamble;
 }
 
@@ -48,6 +54,30 @@ int findFirstIllegalNumberInString(std::string const& input, int preamble_size)
     std::vector<int> const numbers = splitAndConvertToNumbers(input);
 
     return 127; // findFirstIllegalNumberInVector(numbers, preamble_size);
+}
+
+TEST(GetPreambleTest, GetPreambleReturnsCorrectValues)
+{
+    std::vector<int> numbers { 1, 2, 3, 5 };
+    int preamble_size = 3;
+    std::size_t indexToCheck = 3;
+
+    auto result = getPreamble(numbers, preamble_size, indexToCheck);
+    std::vector<int> expectedResult = { 1, 2, 3 };
+
+    EXPECT_EQ(result, expectedResult);
+}
+
+TEST(GetPreambleTest, GetPreambleReturnsCorrectValues2)
+{
+    std::vector<int> numbers { 1, 2, 3, 5, 6, 7, 10 };
+    int preamble_size = 3;
+    std::size_t indexToCheck = 6;
+
+    auto result = getPreamble(numbers, preamble_size, indexToCheck);
+    std::vector<int> expectedResult = { 5, 6, 7 };
+
+    EXPECT_EQ(result, expectedResult);
 }
 
 TEST(SplitAndConvertToNumbersTest, EmptyInputReturnsEmptyVector)
