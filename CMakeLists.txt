@@ -43,7 +43,8 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
     include_directories("${gtest_SOURCE_DIR}/include")
 endif ()
 
-
 add_subdirectory(day_03)
 add_subdirectory(day_05)
+add_subdirectory(day_06)
+add_subdirectory(day_07)
 add_subdirectory(day_09)
