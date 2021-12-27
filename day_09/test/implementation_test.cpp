@@ -172,11 +172,22 @@ TEST(ImplementationTest, ExampleTestPart2)
     ASSERT_EQ(findSumOfEnclosingArrayInString(input, 127), 62);
 }
 
-TEST(ImplementationTest, FindSumMiniExample)
-{
-    constexpr auto input = R"(1
-2
-3)";
+class FindSumMiniExampleTestFixture
+    : public ::testing::TestWithParam<
+          std::tuple<std::vector<std::uint64_t>, std::uint64_t, std::uint64_t>> {
+};
 
-    ASSERT_EQ(findSumOfEnclosingArrayInString(input, 3), 3);
+TEST_P(FindSumMiniExampleTestFixture, CorrectResult)
+{
+    auto const input = std::get<0>(GetParam());
+    auto const invalidNumber = std::get<1>(GetParam());
+    auto const expectedResult = std::get<2>(GetParam());
+
+    ASSERT_EQ(findSumOfEnclosingArrayInVector(input, invalidNumber), expectedResult);
 }
+
+INSTANTIATE_TEST_SUITE_P(FindSumMiniExampleTest, FindSumMiniExampleTestFixture,
+    testing::Values(std::make_tuple(std::vector<std::uint64_t> { 1, 2, 3 }, 3, 3),
+        std::make_tuple(std::vector<std::uint64_t> { 1, 4, 5 }, 5, 5),
+        std::make_tuple(std::vector<std::uint64_t> { 1, 2, 4, 6 }, 6, 6),
+        std::make_tuple(std::vector<std::uint64_t> { 1, 2, 4, 7 }, 7, 5)));
