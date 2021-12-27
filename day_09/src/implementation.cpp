@@ -91,13 +91,17 @@ std::uint64_t findSumOfEnclosingArrayInVector(
         }
         std::uint64_t currentSum = vector.at(i);
         for (std::size_t j = i + 1; j != vector.size(); ++j) {
-            currentSum += vector.at(i + 1);
+            currentSum += vector.at(j);
 
             if (currentSum == invalidNumber) {
-                return currentSum;
+                auto preamble = getPreamble(vector, j - i + 1, j + 1);
+                auto minElement = *std::min_element(preamble.begin(), preamble.end());
+                auto maxElement = *std::max_element(preamble.begin(), preamble.end());
+
+                return minElement + maxElement;
             }
         }
     }
 
-    return 62;
+    return 0;
 }
