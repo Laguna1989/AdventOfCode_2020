@@ -85,5 +85,17 @@ std::uint64_t findSumOfEnclosingArrayInString(std::string const& input, std::uin
 std::uint64_t findSumOfEnclosingArrayInVector(
     std::vector<std::uint64_t> const& vector, std::uint64_t invalidNumber)
 {
+    for (std::size_t i = 0U; i != vector.size(); ++i) {
+        if(i == vector.size() - 2) {
+            continue;
+        }
+//
+//        std::uint64_t currentSum = vector.at(i) + vector.at(i + 1);
+//
+//        if(currentSum == invalidNumber) {
+//            return currentSum;
+//        }
+    }
+
     return 62;
 }
