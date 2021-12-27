@@ -120,7 +120,7 @@ INSTANTIATE_TEST_SUITE_P(FindFirstIllegalNumberInVectorPreamble3Test,
     FindFirstIllegalNumberInVectorPreamble3TestFixture,
     ::testing::Values(std::make_pair(std::vector<std::uint64_t> { 1, 2, 3, 6 }, 6)));
 
-TEST(ImplementationTest, ExampleTest)
+TEST(ImplementationTest, ExampleTestPart1)
 {
     constexpr auto input = R"(35
 20
@@ -144,4 +144,39 @@ TEST(ImplementationTest, ExampleTest)
 576)";
 
     ASSERT_EQ(findFirstIllegalNumberInString(input, 5), 127);
+}
+
+TEST(ImplementationTest, ExampleTestPart2)
+{
+    constexpr auto input = R"(35
+20
+15
+25
+47
+40
+62
+55
+65
+95
+102
+117
+150
+182
+127
+219
+299
+277
+309
+576)";
+
+    ASSERT_EQ(findSumOfEnclosingArrayInString(input, 127), 62);
+}
+
+TEST(ImplementationTest, FindSumMiniExample)
+{
+    constexpr auto input = R"(1
+2
+3)";
+
+    ASSERT_EQ(findSumOfEnclosingArrayInString(input, 3), 3);
 }

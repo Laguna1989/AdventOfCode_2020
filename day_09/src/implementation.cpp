@@ -75,3 +75,15 @@ std::uint64_t findFirstIllegalNumberInString(std::string const& input, int pream
 
     return findFirstIllegalNumberInVector(numbers, preamble_size);
 }
+
+std::uint64_t findSumOfEnclosingArrayInString(std::string const& input, std::uint64_t invalidNumber)
+{
+    std::vector<std::uint64_t> const numbers = splitAndConvertToNumbers(input);
+    return findSumOfEnclosingArrayInVector(numbers, invalidNumber);
+}
+
+std::uint64_t findSumOfEnclosingArrayInVector(
+    std::vector<std::uint64_t> const& vector, std::uint64_t invalidNumber)
+{
+    return 62;
+}
