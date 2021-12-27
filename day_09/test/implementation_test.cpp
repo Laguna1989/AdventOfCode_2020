@@ -190,4 +190,5 @@ INSTANTIATE_TEST_SUITE_P(FindSumMiniExampleTest, FindSumMiniExampleTestFixture,
     testing::Values(std::make_tuple(std::vector<std::uint64_t> { 1, 2, 3 }, 3, 3),
         std::make_tuple(std::vector<std::uint64_t> { 1, 4, 5 }, 5, 5),
         std::make_tuple(std::vector<std::uint64_t> { 1, 2, 4, 6 }, 6, 6),
-        std::make_tuple(std::vector<std::uint64_t> { 1, 2, 4, 7 }, 7, 5)));
+        std::make_tuple(std::vector<std::uint64_t> { 1, 2, 4, 7 }, 7, 5),
+        std::make_tuple(std::vector<std::uint64_t> { 1, 4, 2, 7 }, 7, 5)));
