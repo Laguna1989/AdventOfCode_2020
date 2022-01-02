@@ -57,11 +57,17 @@ std::uint64_t getNumberOfThreesFromDifferences(std::vector<std::uint64_t> const&
 // all of them                                -> 1
 // 1 group of 3 ones  -> all three, two, one  -> 3 = n
 // 1 group of 2 ones -> both or one of them   -> 2 = m
-// combination of groups                        -> (n-1) * (m-1) = 2 * 1 = 2
+// combination of groups                      -> (n-1) * (m-1) = 2 * 1 = 2
 
 std::uint64_t calculateNumberOfCombinationsForDifferences(std::vector<std::uint64_t> const& input)
 {
-    return 8;
+    std::uint64_t sum = 0u;
+
+    for (int groupSize = 2; groupSize != 4; ++groupSize) {
+        sum += calculateNumberOfSpecificOnePermutations(input, groupSize) * groupSize;
+    }
+
+    return sum;
 }
 
 std::uint64_t calculateNumberOfSpecificOnePermutations(
@@ -71,16 +77,25 @@ std::uint64_t calculateNumberOfSpecificOnePermutations(
     for (auto i = 0u; i != input.size() - groupSize; ++i) {
         auto const valueAtI = input.at(i);
         bool found { true };
+        if (i != 0) {
+            if (input.at(i - 1) == valueAtI) {
+                continue;
+            }
+        }
+
+        if (i != input.size() - groupSize) {
+            if (input.at(i + groupSize) == valueAtI) {
+                continue;
+            }
+        }
+
         for (auto j = i + 1; j != i + groupSize; ++j) {
 
             auto const valueAtJ = input.at(j);
 
             auto const currentMatching = valueAtJ == valueAtI;
-            std::cout << i << " " << j << " " << valueAtI << " " << valueAtJ << " "
-                      << std::boolalpha << found << " " << currentMatching << std::endl;
             found = found && currentMatching;
         }
-        std::cout << std::endl;
         if (found) {
             sum++;
         }
