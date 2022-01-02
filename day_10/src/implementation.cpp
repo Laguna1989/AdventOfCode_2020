@@ -44,8 +44,27 @@ std::uint64_t getNumberOfOnesFromDifferences(std::vector<std::uint64_t> const& d
     return std::count_if(
         differences.begin(), differences.end(), [](auto const& n) { return n == 1; });
 }
+
 std::uint64_t getNumberOfThreesFromDifferences(std::vector<std::uint64_t> const& differences)
 {
     return std::count_if(
         differences.begin(), differences.end(), [](auto const& n) { return n == 3; });
+}
+
+// std::vector<std::uint64_t> const {0, 1, 4, 5, 6, 7, 10, 11, 12, 15, 16, 19, (22)};
+// std::vector<std::uint64_t> const { 1,  3, 1, 1, 1, 3,  1,  1,  3,  1,  3, 3 };
+// all of them                                -> 1
+// 1 group of 3 ones  -> all three, two, one  -> 3 = n
+// 1 group of 2 ones -> both or one of them   -> 2 = m
+// combination of groups                        -> (n-1) * (m-1) = 2 * 1 = 2
+
+std::uint64_t calculateNumberOfCombinationsForDifferences(std::vector<std::uint64_t> const& input)
+{
+    return 8;
+}
+
+std::uint64_t calculateNumberOfSpecificOnePermutations(
+    std::vector<std::uint64_t> const& input, std::uint64_t groupSize)
+{
+    return 1;
 }

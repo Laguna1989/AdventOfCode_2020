@@ -102,3 +102,21 @@ TEST(DifferencesTest, NumberOfThrees)
 
     ASSERT_EQ(expectation, result);
 }
+
+TEST(CombinationTest, CountCombinations)
+{
+    std::vector<std::uint64_t> const input { 1, 3, 1, 1, 1, 3, 1, 1, 3, 1, 3, 3 };
+    auto const expectation = 8;
+    auto const result = calculateNumberOfCombinationsForDifferences(input);
+
+    ASSERT_EQ(expectation, result);
+}
+
+TEST(CombinationTest, CountNumberOfSpecificOnePermutations)
+{
+    std::vector<std::uint64_t> const input { 1, 3, 1, 1, 1, 3, 1, 1, 3, 1, 3, 3 };
+    auto const expectation = 1;
+    auto const result = calculateNumberOfSpecificOnePermutations(input, 3);
+
+    ASSERT_EQ(expectation, result);
+}
