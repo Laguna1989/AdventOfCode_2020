@@ -12,4 +12,6 @@ std::uint64_t calculateProductOfOneAndThreeJoltDiffString(std::string const& inp
 std::vector<std::uint64_t> calculateDifferencesOfSortedNumbers(
     std::vector<std::uint64_t> const& numbers);
 
+std::uint64_t getNumberOfOnesFromDifferences();
+
 #endif // ADVENTOFCODE2020_IMPLEMENTATION_HPP

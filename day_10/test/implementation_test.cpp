@@ -46,3 +46,12 @@ TEST(ConversionTest, CalculateDifferences)
     std::vector<std::uint64_t> const expectation { 1, 3, 1, 1, 1, 3, 1, 1, 3, 1, 3, 3 };
     ASSERT_EQ(expectation, result);
 }
+
+TEST(DifferencesTest, NumberOfOnes)
+{
+    std::vector<std::uint64_t> const input { 1, 3, 1, 1, 1, 3, 1, 1, 3, 1, 3, 3 };
+    auto const expectation = 7;
+    auto const result = getNumberOfOnesFromDifferences(input);
+
+    ASSERT_EQ(expectation, result);
+}

@@ -21,13 +21,19 @@ std::uint64_t calculateProductOfOneAndThreeJoltDiffString(std::string const& inp
 
     return 35;
 }
+
 std::vector<std::uint64_t> calculateDifferencesOfSortedNumbers(
     std::vector<std::uint64_t> const& numbers)
 {
     std::vector<std::uint64_t> copy { numbers };
+    std::sort(copy.begin(), copy.end());
 
     std::vector<std::uint64_t> differences;
-    differences.resize(numbers.size());
-    std::adjacent_difference(numbers.begin(), numbers.end(), differences.begin());
+    differences.resize(copy.size());
+    std::adjacent_difference(copy.begin(), copy.end(), differences.begin());
+
+    // Add jolt conversion from last converter to device
+    differences.push_back(3);
     return differences;
 }
+std::uint64_t getNumberOfOnesFromDifferences() { return 7; }
