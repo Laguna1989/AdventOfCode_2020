@@ -1,6 +1,7 @@
 #include "implementation.hpp"
 #include "strutils.hpp"
 #include <algorithm>
+#include <iostream>
 #include <numeric>
 
 std::vector<uint64_t> convertToVector(std::string const& input)
@@ -66,5 +67,23 @@ std::uint64_t calculateNumberOfCombinationsForDifferences(std::vector<std::uint6
 std::uint64_t calculateNumberOfSpecificOnePermutations(
     std::vector<std::uint64_t> const& input, std::uint64_t groupSize)
 {
-    return 1;
+    std::uint64_t sum = 0u;
+    for (auto i = 0u; i != input.size() - groupSize; ++i) {
+        auto const valueAtI = input.at(i);
+        bool found { true };
+        for (auto j = i + 1; j != i + groupSize; ++j) {
+
+            auto const valueAtJ = input.at(j);
+
+            auto const currentMatching = valueAtJ == valueAtI;
+            std::cout << i << " " << j << " " << valueAtI << " " << valueAtJ << " "
+                      << std::boolalpha << found << " " << currentMatching << std::endl;
+            found = found && currentMatching;
+        }
+        std::cout << std::endl;
+        if (found) {
+            sum++;
+        }
+    }
+    return sum;
 }

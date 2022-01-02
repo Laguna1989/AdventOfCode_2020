@@ -112,11 +112,20 @@ TEST(CombinationTest, CountCombinations)
     ASSERT_EQ(expectation, result);
 }
 
-TEST(CombinationTest, CountNumberOfSpecificOnePermutations)
+TEST(CombinationTest, CountNumberOfSpecificOnePermutationsThree)
 {
     std::vector<std::uint64_t> const input { 1, 3, 1, 1, 1, 3, 1, 1, 3, 1, 3, 3 };
     auto const expectation = 1;
     auto const result = calculateNumberOfSpecificOnePermutations(input, 3);
+
+    ASSERT_EQ(expectation, result);
+}
+
+TEST(CombinationTest, CountNumberOfSpecificOnePermutationsTwo)
+{
+    std::vector<std::uint64_t> const input { 1, 3, 1, 1, 1, 3, 1, 1, 3, 1, 3, 3 };
+    auto const expectation = 1;
+    auto const result = calculateNumberOfSpecificOnePermutations(input, 2);
 
     ASSERT_EQ(expectation, result);
 }
