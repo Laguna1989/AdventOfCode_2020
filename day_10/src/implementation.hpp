@@ -15,7 +15,7 @@ std::vector<std::uint64_t> sortAndCalculateDifferencesOfNumbers(
 std::uint64_t getNumberOfOnesFromDifferences(std::vector<std::uint64_t> const& differences);
 std::uint64_t getNumberOfThreesFromDifferences(std::vector<std::uint64_t> const& differences);
 
-std::uint64_t calculateNumberOfCombinationsForDifferences(std::vector<std::uint64_t> const& input);
+std::uint64_t calculateNumberOfCombinationsForInput(std::vector<std::uint64_t> const& input);
 std::uint64_t calculateNumberOfSpecificOnePermutations(
     std::vector<std::uint64_t> const& input, std::uint64_t groupSize);
 

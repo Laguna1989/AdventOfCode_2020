@@ -2,6 +2,7 @@
 #include "strutils.hpp"
 #include <algorithm>
 #include <iostream>
+#include <map>
 #include <numeric>
 
 std::vector<uint64_t> convertToVector(std::string const& input)
@@ -52,53 +53,17 @@ std::uint64_t getNumberOfThreesFromDifferences(std::vector<std::uint64_t> const&
         differences.begin(), differences.end(), [](auto const& n) { return n == 3; });
 }
 
-// std::vector<std::uint64_t> const {0, 1, 4, 5, 6, 7, 10, 11, 12, 15, 16, 19, (22)};
-// std::vector<std::uint64_t> const { 1,  3, 1, 1, 1, 3,  1,  1,  3,  1,  3, 3 };
-// all of them                                -> 1
-// 1 group of 3 ones  -> all three, two, one  -> 3 = n
-// 1 group of 2 ones -> both or one of them   -> 2 = m
-// combination of groups                      -> (n-1) * (m-1) = 2 * 1 = 2
-
-std::uint64_t calculateNumberOfCombinationsForDifferences(std::vector<std::uint64_t> const& input)
+std::uint64_t calculateNumberOfCombinationsForInput(std::vector<std::uint64_t> const& input)
 {
-    std::uint64_t sum = 0u;
+    std::vector<std::uint64_t> copy { input };
+    std::sort(copy.begin(), copy.end());
 
-    for (int groupSize = 2; groupSize != 4; ++groupSize) {
-        sum += calculateNumberOfSpecificOnePermutations(input, groupSize) * groupSize;
+    std::map<std::uint64_t, std::uint64_t> points;
+    points[0] = 1;
+
+    for (auto const& num : copy) {
+        points[num] = points[num - 1] + points[num - 2] + points[num - 3];
     }
 
-    return sum;
-}
-
-std::uint64_t calculateNumberOfSpecificOnePermutations(
-    std::vector<std::uint64_t> const& input, std::uint64_t groupSize)
-{
-    std::uint64_t sum = 0u;
-    for (auto i = 0u; i != input.size() - groupSize; ++i) {
-        auto const valueAtI = input.at(i);
-        bool found { true };
-        if (i != 0) {
-            if (input.at(i - 1) == valueAtI) {
-                continue;
-            }
-        }
-
-        if (i != input.size() - groupSize) {
-            if (input.at(i + groupSize) == valueAtI) {
-                continue;
-            }
-        }
-
-        for (auto j = i + 1; j != i + groupSize; ++j) {
-
-            auto const valueAtJ = input.at(j);
-
-            auto const currentMatching = valueAtJ == valueAtI;
-            found = found && currentMatching;
-        }
-        if (found) {
-            sum++;
-        }
-    }
-    return sum;
+    return points[copy.back()];
 }
