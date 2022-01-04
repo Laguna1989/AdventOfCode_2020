@@ -112,6 +112,42 @@ TEST(CombinationTest, SmallExample)
     ASSERT_EQ(expectation, result);
 }
 
+TEST(CombinationTest, MinimalExample1)
+{
+    std::vector<std::uint64_t> const input { 1,4,7,10 };
+    auto const expectation = 1;
+    auto const result = calculateNumberOfCombinationsForInput(input);
+
+    ASSERT_EQ(expectation, result);
+}
+
+TEST(CombinationTest, MinimalExample2A)
+{
+    std::vector<std::uint64_t> const input { 1,2,4,7,10 };
+    auto const expectation = 3;
+    auto const result = calculateNumberOfCombinationsForInput(input);
+
+    ASSERT_EQ(expectation, result);
+}
+
+TEST(CombinationTest, MinimalExample2B)
+{
+    std::vector<std::uint64_t> const input { 1,4,7,9,10 };
+    auto const expectation = 2;
+    auto const result = calculateNumberOfCombinationsForInput(input);
+
+    ASSERT_EQ(expectation, result);
+}
+
+TEST(CombinationTest, MinimalExample2C)
+{
+    std::vector<std::uint64_t> const input { 1,4,7,8,10 };
+    auto const expectation = 2;
+    auto const result = calculateNumberOfCombinationsForInput(input);
+
+    ASSERT_EQ(expectation, result);
+}
+
 TEST(CombinationTest, BigExample)
 {
     std::string input = R"(28
