@@ -24,6 +24,6 @@ void Ferry::calculateRowLength()
 bool Ferry::is_seat(Position const& p)
 {
     int index = p.x + p.y * m_rowLength;
-
+    std::cout << "index: " << index << " row len: " << m_rowLength << "\n";
     return (m_representation[index] != '.');
 }

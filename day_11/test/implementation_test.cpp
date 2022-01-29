@@ -58,3 +58,21 @@ TEST(FerryParserTest, ComplexTest)
     ASSERT_EQ(f.is_seat(Position { 2, 2 }), false);
     ASSERT_EQ(f.is_seat(Position { 1, 2 }), true);
 }
+
+TEST(FerryParserTest, ReallyComplexTest)
+{
+    auto const input = R"(L.LL.LL.LL
+LLLLLLL.LL
+L.L.L..L..
+LLLL.LL.LL
+L.LL.LL.LL
+L.LLLLL.LL
+..L.L.....
+LLLLLLLLLL
+L.LLLLLL.L
+L.LLLLL.LL)";
+    Ferry f(input);
+
+    ASSERT_EQ(f.is_seat(Position { 0, 0 }), true);
+    ASSERT_EQ(f.is_seat(Position { 7, 1 }), false);
+}
