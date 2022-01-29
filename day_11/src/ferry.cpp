@@ -57,16 +57,18 @@ bool Ferry::is_occupied_seat(int index)
 Ferry Ferry::step()
 {
     std::string updatedString = "";
-
-    for (auto x = 0; x != m_row_length; ++x) {
-        for (auto y = 0; y != m_number_of_rows; ++y) {
+    for (auto y = 0; y != m_number_of_rows; ++y) {
+        for (auto x = 0; x != m_row_length; ++x) {
             Position current_position { x, y };
             if (!is_seat(current_position)) {
                 updatedString += ".";
             } else {
+                // todo: Refactor this hot garbage
                 auto is_left_seat_occupied = is_occupied_seat(Position { x - 1, y });
                 auto is_right_seat_occupied = is_occupied_seat(Position { x + 1, y });
-                if (is_left_seat_occupied || is_right_seat_occupied) {
+                auto is_above_seat_occupied = is_occupied_seat(Position { x, y - 1 });
+                auto is_below_seat_occupied = is_occupied_seat(Position { x, y + 1});
+                if (is_left_seat_occupied || is_right_seat_occupied || is_above_seat_occupied || is_below_seat_occupied) {
                     updatedString += "L";
                 } else {
                     updatedString += "#";
@@ -77,21 +79,5 @@ Ferry Ferry::step()
     }
     updatedString.pop_back();
 
-    return Ferry { updatedString };
-
-    for (int i = 0; i != m_representation.size(); ++i) {
-        if (!is_seat(i)) {
-            updatedString += ".";
-        } else {
-            auto is_left_seat_occupied = is_occupied_seat(i - 1);
-            auto is_right_seat_occupied = is_occupied_seat(i + 1);
-            if (is_left_seat_occupied || is_right_seat_occupied) {
-                updatedString += "L";
-            } else {
-                updatedString += "#";
-            }
-        }
-        updatedString += "\n";
-    }
     return Ferry { updatedString };
 }
