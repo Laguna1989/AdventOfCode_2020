@@ -10,4 +10,8 @@ Ferry::Ferry(std::string const& input)
 {
 }
 
-bool Ferry::is_seat(Position const& p) { return (m_representation != "."); }
+bool Ferry::is_seat(Position const& p) {
+    int index = p.x;
+
+    return (m_representation[index] != '.');
+}

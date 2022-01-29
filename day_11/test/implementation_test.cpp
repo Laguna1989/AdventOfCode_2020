@@ -17,10 +17,34 @@ INSTANTIATE_TEST_SUITE_P(FerryParserTest, FerryParserTestFixture,
     ::testing::Values(
         std::make_pair("L", true), std::make_pair("#", true), std::make_pair(".", false)));
 
-TEST(FerryParserTest, TwoSeatInputIsParsedCorrectly)
+TEST(FerryParserTest, TwoSeatOneRowInputIsParsedCorrectly)
 {
     auto const input = ".#";
     Ferry f(input);
 
     ASSERT_EQ(f.is_seat(Position { 0, 0 }), false);
+}
+
+TEST(FerryParserTest, SecondSeatOfTwoSeatOneRowInputIsParsedCorrectly)
+{
+    auto const input = ".#";
+    Ferry f(input);
+
+    ASSERT_EQ(f.is_seat(Position { 1, 0 }), true);
+}
+
+TEST(FerryParserTest, FirstRowOfTwoRowInputIsParsedCorrectly)
+{
+    auto const input = ".\n#";
+    Ferry f(input);
+
+    ASSERT_EQ(f.is_seat(Position { 0, 0 }), false);
+}
+
+TEST(FerryParserTest, SecondRowOfTwoRowInputIsParsedCorrectly)
+{
+    auto const input = ".\n#";
+    Ferry f(input);
+
+    ASSERT_EQ(f.is_seat(Position { 0, 1 }), true);
 }
