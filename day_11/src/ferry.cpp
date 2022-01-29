@@ -21,10 +21,15 @@ void Ferry::calculate_row_length()
     strutil::replace_all(m_representation, "\n", "");
 }
 
-bool Ferry::is_seat(Position const& p)
+int calculate_index(Position const & p, int stride)
 {
-    int index = p.x + p.y * m_rowLength;
-    std::cout << "index: " << index << " row len: " << m_rowLength << "\n";
+    return p.x + p.y * stride;
+}
+
+bool Ferry::is_seat(Position const& position)
+{
+    int index = calculate_index(position, m_rowLength);
+
     return (m_representation[index] != '.');
 }
 
@@ -32,4 +37,8 @@ int Ferry::get_number_of_occupied_seats()
 {
     return std::count(m_representation.begin(), m_representation.end(), '#');
 }
-bool Ferry::is_occupied_seat(Position position) { return false; }
+bool Ferry::is_occupied_seat(Position position) {
+    int index = calculate_index(position, m_rowLength);
+
+    return (m_representation[index] == '#');
+}

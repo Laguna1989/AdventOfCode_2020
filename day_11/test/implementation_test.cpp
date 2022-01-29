@@ -117,3 +117,11 @@ L.#.L..#..
 
     ASSERT_EQ(f.get_number_of_occupied_seats(), 37);
 }
+
+TEST(FerryRulesTest, SimpleEmptySeatRule)
+{
+    auto const input = "L";
+    Ferry f(input);
+
+    ASSERT_EQ(f.is_occupied_seat(Position{0, 0}), false);
+}
