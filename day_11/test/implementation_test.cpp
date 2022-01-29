@@ -1,21 +1,28 @@
 #include "ferry.hpp"
 #include <gtest/gtest.h>
 
-class FerryParserTestFixture : public ::testing::TestWithParam<std::pair<std::string, bool>> {
+class FerryParserTestFixture : public ::testing::TestWithParam<std::string> {
 };
 
-TEST_P(FerryParserTestFixture, SimpleInputIsParsedCorrectly)
+TEST_P(FerryParserTestFixture, SimpleInputReturnsCorrectIsSeat)
 {
-    auto const input = GetParam().first;
-    auto const expected_is_seat = GetParam().second;
+    auto const input = GetParam();
+    auto const expected_is_seat = input != ".";
     Ferry f(input);
 
     ASSERT_EQ(f.is_seat(Position { 0, 0 }), expected_is_seat);
 }
 
-INSTANTIATE_TEST_SUITE_P(FerryParserTest, FerryParserTestFixture,
-    ::testing::Values(
-        std::make_pair("L", true), std::make_pair("#", true), std::make_pair(".", false)));
+TEST_P(FerryParserTestFixture, SimpleInputReturnsCorrectIsOccupiedSeat)
+{
+    auto const input = GetParam();
+    auto const expected_is_occupied_seat = input == "#";
+    Ferry f(input);
+
+    ASSERT_EQ(f.is_occupied_seat(Position { 0, 0 }), expected_is_occupied_seat);
+}
+
+INSTANTIATE_TEST_SUITE_P(FerryParserTest, FerryParserTestFixture, ::testing::Values("L", "#", "."));
 
 TEST(FerryParserTest, TwoSeatOneRowInputIsParsedCorrectly)
 {
@@ -59,7 +66,7 @@ TEST(FerryParserTest, ComplexTest)
     ASSERT_EQ(f.is_seat(Position { 1, 2 }), true);
 }
 
-TEST(FerryParserTest, ReallyComplexTest)
+TEST(FerryParserTest, ReallyComplexTestIsSeat)
 {
     auto const input = R"(L.LL.LL.LL
 LLLLLLL.LL
@@ -75,4 +82,38 @@ L.LLLLL.LL)";
 
     ASSERT_EQ(f.is_seat(Position { 0, 0 }), true);
     ASSERT_EQ(f.is_seat(Position { 7, 1 }), false);
+}
+
+TEST(FerryParserTest, ReallyComplexTestNumberOfOccupiedSeats)
+{
+    auto const input = R"(L.LL.LL.LL
+LLLLLLL.LL
+L.L.L..L..
+LLLL.LL.LL
+L.LL.LL.LL
+L.LLLLL.LL
+..L.L.....
+LLLLLLLLLL
+L.LLLLLL.L
+L.LLLLL.LL)";
+    Ferry f(input);
+
+    ASSERT_EQ(f.get_number_of_occupied_seats(), 0);
+}
+
+TEST(FerryParserTest, ReallyComplexFinalTestNumberOfOccupiedSeats)
+{
+    auto const input = R"(#.#L.L#.##
+#LLL#LL.L#
+L.#.L..#..
+#L##.##.L#
+#.#L.LL.LL
+#.#L#L#.##
+..L.L.....
+#L#L##L#L#
+#.LLLLLL.L
+#.#L#L#.##)";
+    Ferry f(input);
+
+    ASSERT_EQ(f.get_number_of_occupied_seats(), 37);
 }

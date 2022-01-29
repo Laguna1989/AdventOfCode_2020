@@ -12,10 +12,14 @@ public:
 
     bool is_seat(Position const& p);
 
+    int get_number_of_occupied_seats();
+
+    bool is_occupied_seat(Position position);
+
 private:
     std::string m_representation {};
     int m_rowLength { 0 };
-    void calculateRowLength();
+    void calculate_row_length();
 };
 
 #endif // ADVENTOFCODE2020_FERRY_HPP
