@@ -169,3 +169,24 @@ TEST(FerryRulesTest, TwoAislesInTwoRowsStayUnoccupied)
     ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 0 }), false);
     ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 1 }), false);
 }
+
+TEST(FerryRulesTest, TwoEmptySeatsInTwoRowsBecomeOccupied)
+{
+    auto const input = "L\nL";
+    Ferry initial_ferry(input);
+    Ferry updated_ferry = initial_ferry.step();
+
+    ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 0 }), true);
+    ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 1 }), true);
+}
+
+TEST(FerryRulesTest, OneEmptyOneOccupiedBothBecomeOccupied)
+{
+    auto const input = "#\nL";
+    Ferry initial_ferry(input);
+    Ferry updated_ferry = initial_ferry.step();
+
+    ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 0 }), true);
+    ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 1 }), false);
+}
+
