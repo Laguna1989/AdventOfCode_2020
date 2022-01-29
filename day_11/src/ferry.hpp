@@ -8,7 +8,7 @@
 
 class Ferry {
 public:
-    Ferry(std::string const& input);
+    explicit Ferry(std::string const& input);
 
     bool is_seat(Position const& p);
 
@@ -20,11 +20,12 @@ public:
 
 private:
     std::string m_representation {};
-    int m_rowLength { 100000 };
+    int m_row_length { 100000 };
     void calculate_row_length();
 
     bool is_seat(int index);
     bool is_occupied_seat(int index);
+    int m_number_of_rows { 10000 };
 };
 
 #endif // ADVENTOFCODE2020_FERRY_HPP
