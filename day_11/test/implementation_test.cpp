@@ -48,3 +48,13 @@ TEST(FerryParserTest, SecondRowOfTwoRowInputIsParsedCorrectly)
 
     ASSERT_EQ(f.is_seat(Position { 0, 1 }), true);
 }
+
+TEST(FerryParserTest, ComplexTest)
+{
+    auto const input = ".##\n#..\n#L.";
+    Ferry f(input);
+
+    ASSERT_EQ(f.is_seat(Position { 2, 1 }), false);
+    ASSERT_EQ(f.is_seat(Position { 2, 2 }), false);
+    ASSERT_EQ(f.is_seat(Position { 1, 2 }), true);
+}

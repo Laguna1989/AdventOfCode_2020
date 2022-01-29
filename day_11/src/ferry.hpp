@@ -14,6 +14,8 @@ public:
 
 private:
     std::string m_representation {};
+    int m_rowLength { 0 };
+    void calculateRowLength();
 };
 
 #endif // ADVENTOFCODE2020_FERRY_HPP
