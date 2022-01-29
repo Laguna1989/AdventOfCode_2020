@@ -118,10 +118,32 @@ L.#.L..#..
     ASSERT_EQ(f.get_number_of_occupied_seats(), 37);
 }
 
-TEST(FerryRulesTest, SimpleEmptySeatRule)
+TEST(FerryRulesTest, UnoccupiedSeatWithoutOccupiedNeighboursGetsOccupied)
 {
     auto const input = "L";
-    Ferry f(input);
+    Ferry initial_ferry(input);
 
-    ASSERT_EQ(f.is_occupied_seat(Position{0, 0}), false);
+    Ferry updated_ferry = initial_ferry.step();
+
+    ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 0 }), true);
+}
+
+TEST(FerryRulesTest, OccupiedSeatWithoutOccupiedNeighboursStaysOccupied)
+{
+    auto const input = "#";
+    Ferry initial_ferry(input);
+
+    Ferry updated_ferry = initial_ferry.step();
+
+    ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 0 }), true);
+}
+
+TEST(FerryRulesTest, AisleStaysUnoccupied)
+{
+    auto const input = ".";
+    Ferry initial_ferry(input);
+
+    Ferry updated_ferry = initial_ferry.step();
+
+    ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 0 }), false);
 }

@@ -16,6 +16,8 @@ public:
 
     bool is_occupied_seat(Position position);
 
+    Ferry step();
+
 private:
     std::string m_representation {};
     int m_rowLength { 0 };
