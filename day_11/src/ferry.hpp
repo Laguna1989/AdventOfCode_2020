@@ -22,6 +22,9 @@ private:
     std::string m_representation {};
     int m_rowLength { 0 };
     void calculate_row_length();
+
+    bool is_seat(int index);
+    bool is_occupied_seat(int index);
 };
 
 #endif // ADVENTOFCODE2020_FERRY_HPP
