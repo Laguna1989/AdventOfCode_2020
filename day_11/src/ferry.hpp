@@ -20,7 +20,7 @@ public:
 
 private:
     std::string m_representation {};
-    int m_rowLength { 0 };
+    int m_rowLength { 100000 };
     void calculate_row_length();
 
     bool is_seat(int index);

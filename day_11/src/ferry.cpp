@@ -23,7 +23,6 @@ void Ferry::calculate_row_length()
 
 int calculate_index(Position const& p, int stride) { return p.x + p.y * stride; }
 
-
 bool Ferry::is_seat(Position const& position)
 {
     int index = calculate_index(position, m_rowLength);
@@ -31,10 +30,7 @@ bool Ferry::is_seat(Position const& position)
     return is_seat(index);
 }
 
-bool Ferry::is_seat(int index)
-{
-    return (m_representation[index] != '.');
-}
+bool Ferry::is_seat(int index) { return (m_representation.at(index) != '.'); }
 
 int Ferry::get_number_of_occupied_seats()
 {
@@ -48,19 +44,18 @@ bool Ferry::is_occupied_seat(Position position)
     return is_occupied_seat(index);
 }
 
-bool Ferry::is_occupied_seat(int index)
-{
-    return (m_representation[index] == '#');
-}
+bool Ferry::is_occupied_seat(int index) { return (m_representation.at(index) == '#'); }
 
 Ferry Ferry::step()
 {
+    std::string updatedString = "";
     for (int i = 0; i != m_representation.size(); ++i) {
-        auto current_object = m_representation.at(i);
-        if (current_object == '.') {
-            return Ferry { "." };
+        if (!is_seat(i)) {
+            updatedString += ".";
         } else {
-            return Ferry { "#" };
+            updatedString += "#";
         }
+        updatedString += "\n";
     }
+    return Ferry { updatedString };
 }

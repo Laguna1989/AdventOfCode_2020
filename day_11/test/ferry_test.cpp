@@ -147,3 +147,25 @@ TEST(FerryRulesTest, AisleStaysUnoccupied)
 
     ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 0 }), false);
 }
+
+TEST(FerryRulesTest, TwoAislesInOneRowStayUnoccupied)
+{
+    auto const input = "..";
+    Ferry initial_ferry(input);
+
+    Ferry updated_ferry = initial_ferry.step();
+
+    ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 0 }), false);
+    ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 1, 0 }), false);
+}
+
+TEST(FerryRulesTest, TwoAislesInTwoRowsStayUnoccupied)
+{
+    auto const input = ".\n.";
+    Ferry initial_ferry(input);
+
+    Ferry updated_ferry = initial_ferry.step();
+
+    ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 0 }), false);
+    ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 1 }), false);
+}
