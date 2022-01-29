@@ -1,32 +1,26 @@
-#include "implementation.hpp"
+#include "ferry.hpp"
 #include <gtest/gtest.h>
 
-struct Position {
-    int x, y;
+class FerryParserTestFixture : public ::testing::TestWithParam<std::pair<std::string, bool>> {
 };
 
-
-
-class Ferry {
- public:
-     Ferry(std::string const& input);
-
-     bool is_seat(Position const& p)
-     {
-         return false;
-     }
-};
-
-Ferry::Ferry(const std::string& input)
+TEST_P(FerryParserTestFixture, SimpleInputIsParsedCorrectly)
 {
-
-}
-
-
-TEST(ParseInput, SimpleInputIsParsedCorrectly) {
-    auto input = "L";
+    auto const input = GetParam().first;
+    auto const expected_is_seat = GetParam().second;
     Ferry f(input);
 
-    ASSERT_TRUE(f.is_seat(Position{0, 0}));
+    ASSERT_EQ(f.is_seat(Position { 0, 0 }), expected_is_seat);
 }
 
+INSTANTIATE_TEST_SUITE_P(FerryParserTest, FerryParserTestFixture,
+    ::testing::Values(
+        std::make_pair("L", true), std::make_pair("#", true), std::make_pair(".", false)));
+
+TEST(FerryParserTest, TwoSeatInputIsParsedCorrectly)
+{
+    auto const input = ".#";
+    Ferry f(input);
+
+    ASSERT_EQ(f.is_seat(Position { 0, 0 }), false);
+}
