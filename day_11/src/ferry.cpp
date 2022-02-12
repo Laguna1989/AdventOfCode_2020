@@ -106,4 +106,7 @@ Ferry Ferry::step()
 
     return Ferry { updatedString };
 }
-bool operator==(Ferry const& lhs, Ferry const& rhs) { return false; }
+bool Ferry::operator==(Ferry const& other) const { 
+
+    return (m_representation == other.m_representation) && (m_number_of_rows == other.m_number_of_rows);
+}

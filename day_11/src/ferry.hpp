@@ -16,6 +16,7 @@ public:
     int get_number_of_occupied_seats();
 
     Ferry step();
+    bool operator==(Ferry const& other) const;
 
 private:
     std::string m_representation {};
@@ -27,6 +28,6 @@ private:
     int m_number_of_rows { 10000 };
 };
 
-bool operator==(Ferry const& lhs, Ferry const& rhs);
+
 
 #endif // ADVENTOFCODE2020_FERRY_HPP
