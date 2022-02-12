@@ -199,3 +199,13 @@ TEST(FerryRulesTest, OneEmptyOneOccupiedBothBecomeOccupied)
     ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 0 }), true);
     ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 1 }), false);
 }
+
+TEST(FerryRulesTest, ThreeByThreeEmptySeats)
+{
+    auto const input = "LLL\nLLL\nLLL";
+    Ferry initial_ferry(input);
+    Ferry updated_ferry = initial_ferry.step();
+
+    ASSERT_EQ(updated_ferry.get_number_of_occupied_seats(),9U);
+}
+
