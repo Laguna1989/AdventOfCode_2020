@@ -41,7 +41,7 @@ bool Ferry::is_seat(Position const& position)
 
 bool Ferry::is_seat(int index)
 {
-    if (index < 0 || index >= m_representation.size())
+    if (index < 0 || index >= static_cast<int>(m_representation.size()))
         return false;
 
     return (m_representation.at(index) != '.');
@@ -52,7 +52,7 @@ int Ferry::get_number_of_occupied_seats()
     return std::count(m_representation.begin(), m_representation.end(), '#');
 }
 
-bool Ferry::is_occupied_seat(Position position)
+bool Ferry::is_occupied_seat(const Position& position)
 {
     int index = calculate_index(position, m_row_length);
 
@@ -61,7 +61,7 @@ bool Ferry::is_occupied_seat(Position position)
 
 bool Ferry::is_occupied_seat(int index)
 {
-    if (index < 0 || index >= m_representation.size()) {
+    if (index < 0 || index >= static_cast<int>(m_representation.size())) {
         return false;
     }
     return (m_representation.at(index) == '#');
@@ -119,7 +119,6 @@ int Ferry::getNumberOfOccupiedNeighbours(int x, int y)
 
 bool Ferry::operator==(Ferry const& other) const
 {
-
-    return (m_representation == other.m_representation)
-        && (m_number_of_rows == other.m_number_of_rows);
+    return (m_number_of_rows == other.m_number_of_rows) &&
+           (m_representation == other.m_representation);
 }
