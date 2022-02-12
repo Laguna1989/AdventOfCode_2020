@@ -23,7 +23,13 @@ void Ferry::calculate_row_length()
     }
 }
 
-int calculate_index(Position const& p, int stride) { return p.x + p.y * stride; }
+int calculate_index(Position const& p, int stride)
+{
+    if (p.x < 0 || p.y < 0)
+        return -1;
+
+    return p.x + p.y * stride;
+}
 
 bool Ferry::is_seat(Position const& position)
 {
@@ -32,7 +38,12 @@ bool Ferry::is_seat(Position const& position)
     return is_seat(index);
 }
 
-bool Ferry::is_seat(int index) { return (m_representation.at(index) != '.'); }
+bool Ferry::is_seat(int index) {
+    if (index < 0 || index >= m_representation.size())
+        return false;
+
+    return (m_representation.at(index) != '.');
+}
 
 int Ferry::get_number_of_occupied_seats()
 {
@@ -63,7 +74,6 @@ Ferry Ferry::step()
             if (!is_seat(current_position)) {
                 updatedString += ".";
             } else {
-                // todo check only for four neighbors
                 std::vector<Position> const neighborPositions {
                     Position { x - 1, y - 1}, Position { x, y - 1 }, Position { x + 1, y - 1},
                     Position { x - 1, y }, Position { x + 1, y },

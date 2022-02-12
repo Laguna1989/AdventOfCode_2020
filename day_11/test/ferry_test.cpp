@@ -190,7 +190,7 @@ TEST(FerryRulesTest, TwoEmptySeatsInTwoRowsBecomeOccupied)
     ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 1 }), true);
 }
 
-TEST(FerryRulesTest, OneEmptyOneOccupiedBothBecomeOccupied)
+TEST(FerryRulesTest, OneEmptyOneOccupiedRemainsUnchanged)
 {
     auto const input = "#\nL";
     Ferry initial_ferry(input);
