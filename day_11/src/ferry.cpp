@@ -8,7 +8,9 @@
 Ferry::Ferry(std::string const& input)
     : m_representation { input }
 {
-    m_number_of_rows = std::count(m_representation.begin(), m_representation.end(), '\n') + 1;
+    strutil::trim(m_representation);
+    m_number_of_rows
+        = static_cast<int>(std::count(m_representation.begin(), m_representation.end(), '\n') + 1);
     calculate_row_length();
     strutil::replace_all(m_representation, "\n", "");
 }
@@ -17,9 +19,9 @@ void Ferry::calculate_row_length()
     if (strutil::contains(m_representation, '\n')) {
         auto const firstLineBreakPosition
             = std::find(m_representation.begin(), m_representation.end(), '\n');
-        m_row_length = firstLineBreakPosition - m_representation.begin();
+        m_row_length = static_cast<int>(firstLineBreakPosition - m_representation.begin());
     } else {
-        m_row_length = m_representation.size();
+        m_row_length = static_cast<int>(m_representation.size());
     }
 }
 
@@ -49,7 +51,7 @@ bool Ferry::is_seat(int index)
 
 int Ferry::get_number_of_occupied_seats()
 {
-    return std::count(m_representation.begin(), m_representation.end(), '#');
+    return static_cast<int>(std::count(m_representation.begin(), m_representation.end(), '#'));
 }
 
 bool Ferry::is_occupied_seat(const Position& position)
@@ -119,6 +121,6 @@ int Ferry::getNumberOfOccupiedNeighbours(int x, int y)
 
 bool Ferry::operator==(Ferry const& other) const
 {
-    return (m_number_of_rows == other.m_number_of_rows) &&
-           (m_representation == other.m_representation);
+    return (m_number_of_rows == other.m_number_of_rows)
+        && (m_representation == other.m_representation);
 }
