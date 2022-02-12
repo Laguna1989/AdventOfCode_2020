@@ -200,12 +200,28 @@ TEST(FerryRulesTest, OneEmptyOneOccupiedBothBecomeOccupied)
     ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 1 }), false);
 }
 
-TEST(FerryRulesTest, ThreeByThreeEmptySeats)
+TEST(FerryRulesTest, ThreeByThreeEmptySeatsGetOccupied)
 {
     auto const input = "LLL\nLLL\nLLL";
     Ferry initial_ferry(input);
     Ferry updated_ferry = initial_ferry.step();
 
-    ASSERT_EQ(updated_ferry.get_number_of_occupied_seats(),9U);
+    ASSERT_EQ(updated_ferry.get_number_of_occupied_seats(), 9U);
 }
 
+// ###
+// ###
+// ###
+//
+// #L#
+// LLL
+// #L#
+
+TEST(FerryRulesTest, ThreeByThreeFullSeats)
+{
+    auto const input = "###\n###\n###";
+    Ferry initial_ferry(input);
+    Ferry updated_ferry = initial_ferry.step();
+
+    ASSERT_EQ(updated_ferry.get_number_of_occupied_seats(), 4U);
+}

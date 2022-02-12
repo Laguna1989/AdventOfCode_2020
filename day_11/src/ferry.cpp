@@ -64,14 +64,17 @@ Ferry Ferry::step()
                 updatedString += ".";
             } else {
                 // todo check only for four neighbors
-                std::vector<Position> const neighborPositions { Position { x - 1, y },
-                    Position { x + 1, y }, Position { x, y - 1 }, Position { x, y + 1 } };
+                std::vector<Position> const neighborPositions {
+                    Position { x - 1, y - 1}, Position { x, y - 1 }, Position { x + 1, y - 1},
+                    Position { x - 1, y }, Position { x + 1, y },
+                    Position { x - 1, y + 1}, Position { x, y + 1 }, Position { x + 1, y + 1}
+                };
 
-                bool anyNeighboursOccupied
-                    = std::any_of(neighborPositions.begin(), neighborPositions.end(),
+                auto numberOfOccupiedNeighbours
+                    = std::count_if(neighborPositions.begin(), neighborPositions.end(),
                         [this](Position const& p) { return is_occupied_seat(p); });
 
-                if (anyNeighboursOccupied) {
+                if (numberOfOccupiedNeighbours >= 4) {
                     updatedString += "L";
                 } else {
                     updatedString += "#";
