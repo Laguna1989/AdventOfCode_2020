@@ -1,6 +1,18 @@
 #include "ferry.hpp"
 #include <gtest/gtest.h>
 
+Ferry find_steady_state(Ferry const& ferry){
+    Ferry temp{ferry};
+    while(true){
+        auto old_ferry =temp;
+        temp = temp.step();
+        if(old_ferry == temp){
+            return temp;
+        }
+    }
+    return Ferry{""};
+}
+
 TEST(Part1Example, Step)
 {
     auto const input = R"(
@@ -31,10 +43,7 @@ L.#.L..#..
 
     Ferry const final_ferry { final };
 
-    Ferry updated_ferry { initial_ferry };
-    for (int i = 0; i != 5; ++i) {
-        updated_ferry = updated_ferry.step();
-    }
+    Ferry updated_ferry = find_steady_state(initial_ferry);
 
     ASSERT_EQ(updated_ferry, final_ferry);
 }
