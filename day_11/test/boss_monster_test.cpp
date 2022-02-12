@@ -1,21 +1,23 @@
+#include "boss_monster_input.hpp"
 #include "ferry.hpp"
 #include <gtest/gtest.h>
 
-Ferry find_steady_state(Ferry const& ferry){
-    Ferry temp{ferry};
-    while(true){
-        auto old_ferry =temp;
+Ferry find_steady_state(Ferry const& ferry)
+{
+    Ferry temp { ferry };
+    while (true) {
+        auto old_ferry = temp;
         temp = temp.step();
-        if(old_ferry == temp){
+        if (old_ferry == temp) {
             return temp;
         }
     }
-    return Ferry{""};
+    return Ferry { "" };
 }
 
 TEST(Part1Example, Step)
 {
-    auto const input = R"(
+    constexpr auto input = R"(
 L.LL.LL.LL
 LLLLLLL.LL
 L.L.L..L..
@@ -29,7 +31,7 @@ L.LLLLL.LL)";
 
     Ferry const initial_ferry { input };
 
-    auto const final = R"(
+    constexpr auto final = R"(
 #.#L.L#.##
 #LLL#LL.L#
 L.#.L..#..
@@ -46,4 +48,13 @@ L.#.L..#..
     Ferry updated_ferry = find_steady_state(initial_ferry);
 
     ASSERT_EQ(updated_ferry, final_ferry);
+}
+
+TEST(BossMonsterTest, Part1)
+{
+    Ferry initial_ferry { boss_monster_input };
+    Ferry updated_ferry = find_steady_state(initial_ferry);
+    auto number_of_occupied_seats = updated_ferry.get_number_of_occupied_seats();
+
+    ASSERT_EQ(number_of_occupied_seats, 2481);
 }
