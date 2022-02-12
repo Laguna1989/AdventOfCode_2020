@@ -213,6 +213,10 @@ TEST(FerryRulesTest, ThreeByThreeEmptySeatsGetOccupied)
 // ###
 // ###
 //
+// 353
+// 585
+// 353
+//
 // #L#
 // LLL
 // #L#
@@ -220,6 +224,29 @@ TEST(FerryRulesTest, ThreeByThreeEmptySeatsGetOccupied)
 TEST(FerryRulesTest, ThreeByThreeFullSeats)
 {
     auto const input = "###\n###\n###";
+    Ferry initial_ferry(input);
+    Ferry updated_ferry = initial_ferry.step();
+
+    Ferry expected_ferry { "#L#\nLLL\n#L#" };
+
+    ASSERT_EQ(updated_ferry, expected_ferry);
+}
+
+// ###
+// #L#
+// ###
+//
+// 353
+// 585
+// 353
+//
+// #L#
+// LLL
+// #L#
+
+TEST(FerryRulesTest, ThreeByThreeFullSeatsWithEmptyCenter)
+{
+    auto const input = "###\n#L#\n###";
     Ferry initial_ferry(input);
     Ferry updated_ferry = initial_ferry.step();
 

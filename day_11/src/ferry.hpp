@@ -27,4 +27,6 @@ private:
     int m_number_of_rows { 10000 };
 };
 
+bool operator==(Ferry const& lhs, Ferry const& rhs);
+
 #endif // ADVENTOFCODE2020_FERRY_HPP
