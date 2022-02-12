@@ -26,8 +26,8 @@ private:
     bool is_seat(int index);
     bool is_occupied_seat(int index);
     int m_number_of_rows { 10000 };
+    int getNumberOfOccupiedNeighbours(int x, int y);
+    std::string getNewSeat(Position const& position);
 };
-
-
 
 #endif // ADVENTOFCODE2020_FERRY_HPP

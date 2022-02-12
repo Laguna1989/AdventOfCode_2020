@@ -67,6 +67,25 @@ bool Ferry::is_occupied_seat(int index)
     return (m_representation.at(index) == '#');
 }
 
+std::string Ferry::getNewSeat(Position const& position)
+{
+    auto numberOfOccupiedNeighbours = getNumberOfOccupiedNeighbours(position.x, position.y);
+
+    if (is_occupied_seat(position)) {
+        if (numberOfOccupiedNeighbours >= 4) {
+            return "L";
+        } else {
+            return "#";
+        }
+    } else {
+        if (numberOfOccupiedNeighbours == 0) {
+            return "#";
+        } else {
+            return "L";
+        }
+    }
+}
+
 Ferry Ferry::step()
 {
     std::string updatedString = "";
@@ -75,30 +94,10 @@ Ferry Ferry::step()
             Position current_position { x, y };
             if (!is_seat(current_position)) {
                 updatedString += ".";
-            } else {
-                std::vector<Position> const neighborPositions { Position { x - 1, y - 1 },
-                    Position { x, y - 1 }, Position { x + 1, y - 1 }, Position { x - 1, y },
-                    Position { x + 1, y }, Position { x - 1, y + 1 }, Position { x, y + 1 },
-                    Position { x + 1, y + 1 } };
-
-                auto numberOfOccupiedNeighbours
-                    = std::count_if(neighborPositions.begin(), neighborPositions.end(),
-                        [this](Position const& p) { return is_occupied_seat(p); });
-
-                if (is_occupied_seat(current_position)) {
-                    if (numberOfOccupiedNeighbours >= 4) {
-                        updatedString += "L";
-                    } else {
-                        updatedString += "#";
-                    }
-                } else {
-                    if (numberOfOccupiedNeighbours == 0) {
-                        updatedString += "#";
-                    } else {
-                        updatedString += "L";
-                    }
-                }
+                continue;
             }
+
+            updatedString += getNewSeat(current_position);
         }
         updatedString += "\n";
     }
@@ -106,7 +105,21 @@ Ferry Ferry::step()
 
     return Ferry { updatedString };
 }
-bool Ferry::operator==(Ferry const& other) const { 
 
-    return (m_representation == other.m_representation) && (m_number_of_rows == other.m_number_of_rows);
+int Ferry::getNumberOfOccupiedNeighbours(int x, int y)
+{
+    std::vector<Position> const neighborPositions { Position { x - 1, y - 1 },
+        Position { x, y - 1 }, Position { x + 1, y - 1 }, Position { x - 1, y },
+        Position { x + 1, y }, Position { x - 1, y + 1 }, Position { x, y + 1 },
+        Position { x + 1, y + 1 } };
+
+    return static_cast<int>(std::count_if(neighborPositions.begin(), neighborPositions.end(),
+        [this](Position const& p) { return is_occupied_seat(p); }));
+}
+
+bool Ferry::operator==(Ferry const& other) const
+{
+
+    return (m_representation == other.m_representation)
+        && (m_number_of_rows == other.m_number_of_rows);
 }
