@@ -170,6 +170,16 @@ TEST(FerryRulesTest, TwoAislesInTwoRowsStayUnoccupied)
     ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 1 }), false);
 }
 
+TEST(FerryRulesTest, TwoEmptySeatsInOneRowsBecomeOccupied)
+{
+    auto const input = "LL";
+    Ferry initial_ferry(input);
+    Ferry updated_ferry = initial_ferry.step();
+
+    ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 0 }), true);
+    ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 1, 0 }), true);
+}
+
 TEST(FerryRulesTest, TwoEmptySeatsInTwoRowsBecomeOccupied)
 {
     auto const input = "L\nL";
@@ -189,4 +199,3 @@ TEST(FerryRulesTest, OneEmptyOneOccupiedBothBecomeOccupied)
     ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 0 }), true);
     ASSERT_EQ(updated_ferry.is_occupied_seat(Position { 0, 1 }), false);
 }
-

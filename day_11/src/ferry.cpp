@@ -63,12 +63,15 @@ Ferry Ferry::step()
             if (!is_seat(current_position)) {
                 updatedString += ".";
             } else {
-                // todo: Refactor this hot garbage
-                auto is_left_seat_occupied = is_occupied_seat(Position { x - 1, y });
-                auto is_right_seat_occupied = is_occupied_seat(Position { x + 1, y });
-                auto is_above_seat_occupied = is_occupied_seat(Position { x, y - 1 });
-                auto is_below_seat_occupied = is_occupied_seat(Position { x, y + 1});
-                if (is_left_seat_occupied || is_right_seat_occupied || is_above_seat_occupied || is_below_seat_occupied) {
+                // todo check only for four neighbors
+                std::vector<Position> const neighborPositions { Position { x - 1, y },
+                    Position { x + 1, y }, Position { x, y - 1 }, Position { x, y + 1 } };
+
+                bool anyNeighboursOccupied
+                    = std::any_of(neighborPositions.begin(), neighborPositions.end(),
+                        [this](Position const& p) { return is_occupied_seat(p); });
+
+                if (anyNeighboursOccupied) {
                     updatedString += "L";
                 } else {
                     updatedString += "#";

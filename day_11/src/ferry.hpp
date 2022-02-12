@@ -11,10 +11,9 @@ public:
     explicit Ferry(std::string const& input);
 
     bool is_seat(Position const& p);
+    bool is_occupied_seat(Position position);
 
     int get_number_of_occupied_seats();
-
-    bool is_occupied_seat(Position position);
 
     Ferry step();
 
