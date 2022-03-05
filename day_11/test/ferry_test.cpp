@@ -253,3 +253,25 @@ TEST(FerryRulesTest, ThreeByThreeFullSeatsWithEmptyCenter)
 
     ASSERT_EQ(updated_ferry.get_number_of_occupied_seats(), 4U);
 }
+
+// .#.
+// ###
+// .#.
+//
+// 333
+// 343
+// 333
+//
+// .#.
+// ###
+// .#.
+
+TEST(FerryRulesTest, TODO)
+{
+    auto const input = "###\n#L#\n###";
+    Ferry initial_ferry(input);
+    Ferry updated_ferry = initial_ferry.step();
+
+    ASSERT_EQ(updated_ferry.get_number_of_occupied_seats(), 4U);
+    ASSERT_TRUE(false);
+}
