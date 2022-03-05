@@ -1,21 +1,6 @@
 #include "ferry.hpp"
 #include <gtest/gtest.h>
 
-class FerryTestSpy : public Ferry
-{
-public:
-    explicit FerryTestSpy(std::string const& input)
-    : Ferry(input)
-    {
-    }
-
-    bool testNumberOfOccupiedNeighbors(int x, int y, int expected_number_of_neigbhors)
-    {
-        return false;
-    }
-};
-
-
 class FerryParserTestFixture : public ::testing::TestWithParam<std::string> {
 };
 
@@ -220,9 +205,9 @@ TEST(FerryRulesTest, ThreeByThreeEmptySeatsGetOccupied)
     auto const input = "LLL\nLLL\nLLL";
     Ferry initial_ferry(input);
     Ferry updated_ferry = initial_ferry.step();
-    Ferry expected_ferry {"###\n###\n###"};
-    
-    ASSERT_EQ(updated_ferry,expected_ferry);
+    Ferry expected_ferry { "###\n###\n###" };
+
+    ASSERT_EQ(updated_ferry, expected_ferry);
 }
 
 // ###
@@ -269,11 +254,74 @@ TEST(FerryRulesTest, ThreeByThreeFullSeatsWithEmptyCenter)
     ASSERT_EQ(updated_ferry.get_number_of_occupied_seats(), 4U);
 }
 
+class FerryTestSpy : public Ferry {
+public:
+    explicit FerryTestSpy(std::string const& input)
+        : Ferry(input)
+    {
+    }
 
-TEST(Part2Test, SpyCheck)
+    bool testNumberOfOccupiedNeighbors(int x, int y, int expected_number_of_neigbhors)
+    {
+        return getNumberOfOccupiedNeighbours(x, y) == expected_number_of_neigbhors;
+    }
+};
+
+class FerryOccupiedNeighboursTestFixture
+    : public ::testing::TestWithParam<std::pair<std::string, int>> {
+};
+
+TEST_P(FerryOccupiedNeighboursTestFixture, SpyCheck)
 {
-    auto const input = "###\n#L#\n###";
+    auto const input = GetParam().first;
     FerryTestSpy initial_ferry(input);
 
-    ASSERT_EQ(initial_ferry.testNumberOfOccupiedNeighbors(1, 1, 4), true);
+    int expectedNumberOfNeighbours = GetParam().second;
+    ASSERT_EQ(initial_ferry.testNumberOfOccupiedNeighbors(1, 1, expectedNumberOfNeighbours), true);
 }
+
+INSTANTIATE_TEST_SUITE_P(FerryOccupiedNeighboursTest, FerryOccupiedNeighboursTestFixture,
+    ::testing::Values(std::make_pair("###\n"
+                                     "#L#\n"
+                                     "###",
+                          8),
+        std::make_pair("...\n"
+                       ".L.\n"
+                       "...",
+            0),
+        std::make_pair("#..\n"
+                       ".L.\n"
+                       "...",
+            1),
+        std::make_pair(".#.\n"
+                       ".L.\n"
+                       "...",
+            1),
+        std::make_pair("..#\n"
+                       ".L.\n"
+                       "...",
+            1),
+        std::make_pair("...\n"
+                       "#L.\n"
+                       "...",
+            1),
+        std::make_pair("...\n"
+                       ".L#\n"
+                       "...",
+            1),
+        std::make_pair("...\n"
+                       ".L.\n"
+                       "#..",
+            1),
+        std::make_pair("...\n"
+                       ".L.\n"
+                       ".#.",
+            1),
+        std::make_pair("...\n"
+                       ".L.\n"
+                       "..#",
+            1),
+        std::make_pair("....\n"
+                       ".L.#\n"
+                       "....",
+            1)));
