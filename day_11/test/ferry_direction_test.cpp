@@ -51,6 +51,18 @@ INSTANTIATE_TEST_SUITE_P(FerryDirectionNeighboursTest,
                                            ".#.",
                            0, 1 },
             "#"),
+        std::make_pair(DirectionTestData {
+                                           "...\n"
+                                           ".L.\n"
+                                           "...\n"
+                                           ".#.",
+                           0, -1 },
+            "."),
+        std::make_pair(DirectionTestData { "....\n"
+                                           ".L.#\n"
+                                           "....",
+                           -1, 0 },
+            "."),
             std::make_pair(DirectionTestData { "....\n"
                                            ".L.#\n"
                                            "....",

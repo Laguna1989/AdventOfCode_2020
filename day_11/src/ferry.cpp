@@ -110,10 +110,10 @@ Ferry Ferry::step()
 
 int Ferry::getNumberOfOccupiedNeighbours(int x, int y) const
 {
-    std::vector<Position> const neighborPositions { Position { x - 1, y - 1 },
-        Position { x, y - 1 }, Position { x + 1, y - 1 }, Position { x - 1, y },
-        Position { x + 1, y }, Position { x - 1, y + 1 }, Position { x, y + 1 },
-        Position { x + 1, y + 1 } };
+    std::vector<Position> const neighborPositions { Position { - 1, - 1 },
+        Position { 0, - 1 }, Position {  1,  - 1 }, Position {  - 1, 0 },
+        Position {  1, 0 }, Position { - 1, 1 }, Position { 0,  1 },
+        Position {  1,  1 } };
 
     return static_cast<int>(std::count_if(neighborPositions.begin(), neighborPositions.end(),
         [this](Position const& p) { return is_occupied_seat(p); }));
@@ -123,12 +123,16 @@ std::string Ferry::getNeighbourSeatsInDirection(int x, int y, int x_offset, int 
 {
     std::string seat_representation = ".";
     while (true) {
-        // TODO add xoffset
         y += y_offset;
-        if (y >= m_number_of_rows) {
+        x += x_offset;
+        if (y >= m_number_of_rows || x >= m_row_length) {
             return seat_representation;
         }
         auto const index = calculate_index(Position { x, y }, m_row_length);
+        if (index < 0)
+        {
+            return seat_representation;
+        }
         if (!is_seat(index)) {
             continue;
         }
