@@ -11,8 +11,8 @@ public:
     explicit Ferry(std::string const& input);
     virtual ~Ferry() = default;
 
-    bool is_seat(Position const& p);
-    bool is_occupied_seat(const Position& position);
+    bool is_seat(Position const& p) const;
+    bool is_occupied_seat(const Position& position) const;
 
     int get_number_of_occupied_seats();
 
@@ -20,17 +20,17 @@ public:
     bool operator==(Ferry const& other) const;
 
 protected:
-    int getNumberOfOccupiedNeighbours(int x, int y);
-    std::string getNeighbourSeatsInDirection(int x, int y, int offset_x,int offset_y);
+    int getNumberOfOccupiedNeighbours(int x, int y) const;
+    std::string getNeighbourSeatsInDirection(int x, int y, int offset_x, int offset_y) const;
 
 private:
     std::string m_representation {};
     int m_row_length { 100000 };
     void calculate_row_length();
 
-    bool is_seat(int index);
-    bool is_occupied_seat(int index);
-    
+    bool is_seat(int index) const;
+    bool is_occupied_seat(int index) const;
+
     int m_number_of_rows { 10000 };
     std::string getNewSeat(Position const& position);
 };

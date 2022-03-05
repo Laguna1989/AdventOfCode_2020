@@ -34,14 +34,14 @@ int calculate_index(Position const& p, int stride)
     return p.x + p.y * stride;
 }
 
-bool Ferry::is_seat(Position const& position)
+bool Ferry::is_seat(Position const& position) const
 {
     int index = calculate_index(position, m_row_length);
 
     return is_seat(index);
 }
 
-bool Ferry::is_seat(int index)
+bool Ferry::is_seat(int index) const
 {
     if (index < 0 || index >= static_cast<int>(m_representation.size()))
         return false;
@@ -54,14 +54,14 @@ int Ferry::get_number_of_occupied_seats()
     return static_cast<int>(std::count(m_representation.begin(), m_representation.end(), '#'));
 }
 
-bool Ferry::is_occupied_seat(const Position& position)
+bool Ferry::is_occupied_seat(const Position& position) const
 {
     int index = calculate_index(position, m_row_length);
 
     return is_occupied_seat(index);
 }
 
-bool Ferry::is_occupied_seat(int index)
+bool Ferry::is_occupied_seat(int index) const
 {
     if (index < 0 || index >= static_cast<int>(m_representation.size())) {
         return false;
@@ -108,7 +108,7 @@ Ferry Ferry::step()
     return Ferry { updatedString };
 }
 
-int Ferry::getNumberOfOccupiedNeighbours(int x, int y)
+int Ferry::getNumberOfOccupiedNeighbours(int x, int y) const
 {
     std::vector<Position> const neighborPositions { Position { x - 1, y - 1 },
         Position { x, y - 1 }, Position { x + 1, y - 1 }, Position { x - 1, y },
@@ -119,10 +119,21 @@ int Ferry::getNumberOfOccupiedNeighbours(int x, int y)
         [this](Position const& p) { return is_occupied_seat(p); }));
 }
 
-std::string Ferry::getNeighbourSeatsInDirection(int x, int y, int x_offset,int y_offset){
-
-    auto const index = calculate_index(Position{x + x_offset ,y + y_offset},m_row_length);
-    return std::string{m_representation[index]};
+std::string Ferry::getNeighbourSeatsInDirection(int x, int y, int x_offset, int y_offset) const
+{
+    std::string seat_representation = ".";
+    while (true) {
+        // TODO add xoffset
+        y += y_offset;
+        if (y >= m_number_of_rows) {
+            return seat_representation;
+        }
+        auto const index = calculate_index(Position { x, y }, m_row_length);
+        if (!is_seat(index)) {
+            continue;
+        }
+        return std::string { m_representation[index] };
+    }
 }
 
 bool Ferry::operator==(Ferry const& other) const
