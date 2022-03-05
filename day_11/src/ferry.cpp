@@ -121,7 +121,7 @@ int Ferry::getNumberOfOccupiedNeighbours(int x, int y)
 
 std::string Ferry::getNeighbourSeatsInDirection(int x, int y, int x_offset,int y_offset){
 
-    auto const index = calculate_index(Position{x + x_offset ,y + y_offset},m_number_of_rows);
+    auto const index = calculate_index(Position{x + x_offset ,y + y_offset},m_row_length);
     return std::string{m_representation[index]};
 }
 
