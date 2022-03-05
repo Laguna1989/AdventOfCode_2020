@@ -9,6 +9,7 @@
 class Ferry {
 public:
     explicit Ferry(std::string const& input);
+    virtual ~Ferry() = default;
 
     bool is_seat(Position const& p);
     bool is_occupied_seat(const Position& position);
@@ -18,6 +19,9 @@ public:
     Ferry step();
     bool operator==(Ferry const& other) const;
 
+protected:
+    int getNumberOfOccupiedNeighbours(int x, int y);
+
 private:
     std::string m_representation {};
     int m_row_length { 100000 };
@@ -26,7 +30,6 @@ private:
     bool is_seat(int index);
     bool is_occupied_seat(int index);
     int m_number_of_rows { 10000 };
-    int getNumberOfOccupiedNeighbours(int x, int y);
     std::string getNewSeat(Position const& position);
 };
 

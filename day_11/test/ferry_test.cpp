@@ -1,6 +1,21 @@
 #include "ferry.hpp"
 #include <gtest/gtest.h>
 
+class FerryTestSpy : public Ferry
+{
+public:
+    explicit FerryTestSpy(std::string const& input)
+    : Ferry(input)
+    {
+    }
+
+    bool testNumberOfOccupiedNeighbors(int x, int y, int expected_number_of_neigbhors)
+    {
+        return false;
+    }
+};
+
+
 class FerryParserTestFixture : public ::testing::TestWithParam<std::string> {
 };
 
@@ -252,4 +267,13 @@ TEST(FerryRulesTest, ThreeByThreeFullSeatsWithEmptyCenter)
     Ferry updated_ferry = initial_ferry.step();
 
     ASSERT_EQ(updated_ferry.get_number_of_occupied_seats(), 4U);
+}
+
+
+TEST(Part2Test, SpyCheck)
+{
+    auto const input = "###\n#L#\n###";
+    FerryTestSpy initial_ferry(input);
+
+    ASSERT_EQ(initial_ferry.testNumberOfOccupiedNeighbors(1, 1, 4), true);
 }
