@@ -35,8 +35,7 @@ TEST_P(FerryOccupiedNeighboursInDirectionTestFixture, CorrectResult)
 
     auto const expectedNeighbor = GetParam().second;
     initial_ferry.testNeighbourSeatInDirection(
-        1, 1, input.x_offset, input.y_offset, expectedNeighbor),
-        true;
+        1, 1, input.x_offset, input.y_offset, expectedNeighbor);
 }
 
 INSTANTIATE_TEST_SUITE_P(FerryDirectionNeighboursTest,
@@ -51,6 +50,11 @@ INSTANTIATE_TEST_SUITE_P(FerryDirectionNeighboursTest,
                                            "...\n"
                                            ".#.",
                            0, 1 },
+            "#"),
+            std::make_pair(DirectionTestData { "....\n"
+                                           ".L.#\n"
+                                           "....",
+                           1, 0 },
             "#")));
 
 class FerryOccupiedNeighboursTestFixture
@@ -63,7 +67,7 @@ TEST_P(FerryOccupiedNeighboursTestFixture, CorrectResult)
     FerryTestSpy const initial_ferry(input);
 
     int const expectedNumberOfNeighbours = GetParam().second;
-    initial_ferry.testNumberOfOccupiedNeighbors(1, 1, expectedNumberOfNeighbours), true;
+    initial_ferry.testNumberOfOccupiedNeighbors(1, 1, expectedNumberOfNeighbours);
 }
 
 INSTANTIATE_TEST_SUITE_P(FerryOccupiedNeighboursTest, FerryOccupiedNeighboursTestFixture,
