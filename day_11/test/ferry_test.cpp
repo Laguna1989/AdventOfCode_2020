@@ -292,18 +292,8 @@ TEST_P(FerryOccupiedNeighboursInDirectionTestFixture, SpyCheck)
 INSTANTIATE_TEST_SUITE_P(FerryDirectionNeighboursTest, FerryOccupiedNeighboursInDirectionTestFixture,
     ::testing::Values(std::make_pair(DirectionTestData{"###\n"
                                      "#L#\n"
-                                     "###", 1, 1}, "."
+                                     "###", 1, 1}, "#"
                           )));
-
-
-TEST(FerrySeatInDirection, Spycheck){
-    auto const input = "...\n"
-                       ".L.\n"
-                       "...";
-    FerryTestSpy initial_ferry(input);
-    std::string expectedStringInDirection = ".";
-    ASSERT_EQ(initial_ferry.testNeighbourSeatInDirection(1,1,1,1,"."),true);
-}
 
 class FerryOccupiedNeighboursTestFixture
     : public ::testing::TestWithParam<std::pair<std::string, int>> {
