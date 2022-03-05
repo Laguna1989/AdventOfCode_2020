@@ -119,6 +119,10 @@ int Ferry::getNumberOfOccupiedNeighbours(int x, int y)
         [this](Position const& p) { return is_occupied_seat(p); }));
 }
 
+std::string Ferry::getNeighbourSeatsInDirection(int x, int y, int x_offset,int y_offsert){
+    return "";
+}
+
 bool Ferry::operator==(Ferry const& other) const
 {
     return (m_number_of_rows == other.m_number_of_rows)

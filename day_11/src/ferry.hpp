@@ -21,6 +21,7 @@ public:
 
 protected:
     int getNumberOfOccupiedNeighbours(int x, int y);
+    std::string getNeighbourSeatsInDirection(int x, int y, int offset_x,int offset_y);
 
 private:
     std::string m_representation {};
@@ -29,6 +30,7 @@ private:
 
     bool is_seat(int index);
     bool is_occupied_seat(int index);
+    
     int m_number_of_rows { 10000 };
     std::string getNewSeat(Position const& position);
 };

@@ -265,7 +265,19 @@ public:
     {
         return getNumberOfOccupiedNeighbours(x, y) == expected_number_of_neigbhors;
     }
+    bool testNeighbourSeatInDirection(int x, int y , int offset_x , int offset_y , std::string expected_seat){
+        return getNeighbourSeatsInDirection(x,y,offset_x,offset_y) == expected_seat;
+    }
 };
+
+TEST(FerrySeatInDirection, Spycheck){
+    auto const input = "...\n"
+                       ".L.\n"
+                       "...";
+    FerryTestSpy initial_ferry(input);
+    std::string expectedStringInDirection = ".";
+    ASSERT_EQ(initial_ferry.testNeighbourSeatInDirection(1,1,1,1,"."),true);
+}
 
 class FerryOccupiedNeighboursTestFixture
     : public ::testing::TestWithParam<std::pair<std::string, int>> {
