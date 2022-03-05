@@ -270,6 +270,32 @@ public:
     }
 };
 
+struct DirectionTestData {
+    std::string input;
+    int x_offset, y_offset;
+};
+class FerryOccupiedNeighboursInDirectionTestFixture
+    : public ::testing::TestWithParam<std::pair<struct DirectionTestData, std::string>> {
+};
+
+TEST_P(FerryOccupiedNeighboursInDirectionTestFixture, SpyCheck)
+{
+    auto const input = GetParam().first;
+    FerryTestSpy initial_ferry(input.input);
+
+    auto const expectedNeighbor = GetParam().second;
+    ASSERT_EQ(initial_ferry.testNeighbourSeatInDirection(1, 1,
+                  input.x_offset, input.y_offset,
+                  expectedNeighbor), true);
+}
+
+INSTANTIATE_TEST_SUITE_P(FerryDirectionNeighboursTest, FerryOccupiedNeighboursInDirectionTestFixture,
+    ::testing::Values(std::make_pair(DirectionTestData{"###\n"
+                                     "#L#\n"
+                                     "###", 1, 1}, "."
+                          )));
+
+
 TEST(FerrySeatInDirection, Spycheck){
     auto const input = "...\n"
                        ".L.\n"
