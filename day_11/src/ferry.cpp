@@ -74,7 +74,7 @@ std::string Ferry::getNewSeat(Position const& position)
     auto numberOfOccupiedNeighbours = getNumberOfOccupiedNeighbours(position.x, position.y);
 
     if (is_occupied_seat(position)) {
-        if (numberOfOccupiedNeighbours >= 4) {
+        if (numberOfOccupiedNeighbours >= 5) {
             return "L";
         } else {
             return "#";
@@ -110,9 +110,19 @@ Ferry Ferry::step()
 
 int Ferry::getNumberOfOccupiedNeighbours(int x, int y) const
 {
-    std::vector<Position> const neighborPositions { Position { -1, -1 }, Position { 0, -1 },
-        Position { 1, -1 }, Position { -1, 0 }, Position { 1, 0 }, Position { -1, 1 },
-        Position { 0, 1 }, Position { 1, 1 } };
+    // clang-format off
+    std::vector<Position> const neighborPositions {
+        Position { -1, -1 },
+        Position { 0, -1 },
+        Position { 1, -1 },
+
+        Position { -1, 0 },
+        Position { 1, 0 },
+
+        Position { -1, 1 },
+        Position { 0, 1 },
+        Position { 1, 1 } };
+    // clang-format on
 
     return static_cast<int>(std::count_if(
         neighborPositions.begin(), neighborPositions.end(), [this, x, y](Position const& p) {
