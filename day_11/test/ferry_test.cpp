@@ -265,13 +265,11 @@ TEST(FerryRulesTest, ThreeByThreeFullSeatsWithEmptyCenter)
 // .#.
 // ###
 // .#.
-
 TEST(FerryRulesTest, TODO)
 {
-    auto const input = "###\n#L#\n###";
+    auto const input = ".#.\n#L#\n.#.";
     Ferry initial_ferry(input);
     Ferry updated_ferry = initial_ferry.step();
 
-    ASSERT_EQ(updated_ferry.get_number_of_occupied_seats(), 4U);
-    ASSERT_TRUE(false);
+    ASSERT_EQ(updated_ferry.get_number_of_occupied_seats(), 5U);
 }
