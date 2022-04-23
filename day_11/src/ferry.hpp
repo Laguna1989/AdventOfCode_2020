@@ -19,9 +19,10 @@ public:
     Ferry step();
     bool operator==(Ferry const& other) const;
 
+    std::string getNeighbourSeatsInDirection(int x, int y, int offset_x, int offset_y) const;
+
 protected:
     int getNumberOfOccupiedNeighbours(int x, int y) const;
-    std::string getNeighbourSeatsInDirection(int x, int y, int offset_x, int offset_y) const;
 
 private:
     std::string m_representation {};
