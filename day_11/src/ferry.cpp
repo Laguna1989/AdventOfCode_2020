@@ -69,7 +69,7 @@ bool Ferry::is_occupied_seat(int index) const
     return (m_representation.at(index) == '#');
 }
 
-std::string Ferry::getNewSeat(Position const& position)
+std::string Ferry::getNewSeat(Position const& position) const
 {
     auto numberOfOccupiedNeighbours = getNumberOfOccupiedNeighbours(position.x, position.y);
 
@@ -88,7 +88,7 @@ std::string Ferry::getNewSeat(Position const& position)
     }
 }
 
-Ferry Ferry::step()
+Ferry Ferry::step() const
 {
     std::string updatedString = "";
     for (auto y = 0; y != m_number_of_rows; ++y) {

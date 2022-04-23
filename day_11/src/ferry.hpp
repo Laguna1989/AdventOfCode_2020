@@ -16,7 +16,7 @@ public:
 
     int get_number_of_occupied_seats();
 
-    Ferry step();
+    Ferry step() const;
     bool operator==(Ferry const& other) const;
 
     std::string getNeighbourSeatsInDirection(int x, int y, int offset_x, int offset_y) const;
@@ -33,7 +33,7 @@ private:
     bool is_occupied_seat(int index) const;
 
     int m_number_of_rows { 10000 };
-    std::string getNewSeat(Position const& position);
+    std::string getNewSeat(Position const& position) const;
 };
 
 #endif // ADVENTOFCODE2020_FERRY_HPP
